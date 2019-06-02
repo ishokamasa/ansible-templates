@@ -1,6 +1,7 @@
 server {
     listen       80;
     server_name  {{ virtualdomain }};
+    root         /var/www/html/{{ virtualdomain }};
 
     #charset koi8-r;
     #access_log  /var/log/nginx/{{ virtualdomain }}.access.log  main;
@@ -17,10 +18,9 @@ server {
     }
 
     location ~ \.php$ {
-        root           /var/www/html/{{ virtualdomain }};
         fastcgi_pass   unix:/var/run/php-fpm/php-fpm.sock;
         fastcgi_index  index.php;
-        fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
         include        fastcgi_params;
     }
 }
