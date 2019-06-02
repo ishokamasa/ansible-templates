@@ -10,3 +10,10 @@
   yum: pkg="{{ item }}" state=present
   loop:
     - mysql-community-server
+
+- name: start mysql
+  tags: mysql
+  service:
+    name: mysqld
+    enabled: yes
+    state: started
