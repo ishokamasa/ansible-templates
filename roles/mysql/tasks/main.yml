@@ -1,0 +1,12 @@
+---
+- name: install mysql repo
+  tags: mysql
+  yum:
+    name: http://dev.mysql.com/get/mysql57-community-release-el6-7.noarch.rpm
+    state: present
+
+- name: install mysql
+  tags: mysql
+  yum: pkg="{{ item }}" state=present
+  loop:
+    - mysql-community-server

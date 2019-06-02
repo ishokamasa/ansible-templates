@@ -6,3 +6,4 @@
     - base
     - php-fpm
     - nginx
+    - mysql
