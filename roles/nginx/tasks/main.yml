@@ -49,12 +49,3 @@
     group: nginx
     mode: 0644
   notify: nginx configtest
-
-#- name: unarchive postfixadmin
-#  tags: apache
-#  unarchive:
-#    src: /var/www/postfixadmin-3.2.tar.gz
-#    dest: /var/www/html/
-#    remote_src: yes
-#  notify: apachectl configtest
-#  ignore_errors: true
