@@ -35,6 +35,7 @@
     - { regexp: ^;date.timezone =$, replace: date.timezone = \'Asia/Tokyo\' }
     - { regexp: ^upload_max_filesize = 2M$, replace: upload_max_filesize = 10M }
     - { regexp: ^post_max_size = 8M$, replace: post_max_size = 10M }
+  notify: php-fpm reload
 
 - name: set www.conf
   tags: php-fpm
@@ -44,6 +45,7 @@
     replace: "{{ item.replace }}"
   loop:
     - { regexp: ^listen = 127.0.0.1:9000$, replace: listen = /var/run/php-fpm/php-fpm.sock }
+  notify: php-fpm reload
 
 - name: create php-fpm pid directory
   tags: php-fpm
