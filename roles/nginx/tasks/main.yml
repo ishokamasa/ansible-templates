@@ -30,10 +30,26 @@
     - { src: roles/nginx/files/nginx.conf, dest: nginx.conf }
   notify: nginx configtest
 
-#- name: copy postfixadmin
-#  tags: apache
-#  copy: src=roles/apache/files/postfixadmin-3.2.tar.gz dest=/var/www/postfixadmin-3.2.tar.gz
-#
+- name: create directory
+  tags: nginx
+  file:
+    path: "/var/www/html/{{ virtualdomain }}"
+    owner: nginx
+    group: nginx
+    mode: '0775'
+    state: directory
+    recurse: yes
+
+- name: copy virutal config
+  tags: nginx
+  template:
+    src: "roles/nginx/templates/virtual.conf.j2"
+    dest: "/etc/nginx/conf.d/{{ virtualdomain }}.conf"
+    owner: nginx
+    group: nginx
+    mode: 0644
+  notify: nginx configtest
+
 #- name: unarchive postfixadmin
 #  tags: apache
 #  unarchive:
