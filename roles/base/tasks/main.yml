@@ -1,0 +1,14 @@
+---
+- hostname:
+    name: "{{ hostname }}"
+
+- name: install basic packages
+  yum:  pkg={{ item }} state=latest
+  with_items:
+    - git
+    - mailx
+    - mysql
+    - unzip
+    - tcpdump
+    - telnet
+    - wget

@@ -1,0 +1,6 @@
+---
+- hosts: app
+  vars_files:
+    - group_vars/all.yml
+  roles:
+    - nginx

@@ -1,0 +1,44 @@
+---
+- name: install ngiinx repo
+  tags: nginx
+  yum:
+    name: http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm
+    state: present
+
+- name: install nginx
+  tags: nginx
+  yum: pkg={{ item }} state=latest
+  loop:
+    - nginx
+
+- name: start nginx
+  tags: nginx
+  service:
+    name: nginx
+    enabled: yes
+    state: started
+
+#- name: copy config files of apache
+#  tags: apache
+#  template:
+#    src: "{{ item.src }}"
+#    dest: "/etc/httpd/{{ item.dest }}"
+#    owner: root
+#    group: root
+#    mode: 0644
+#  loop:
+#    - { src: roles/apache/templates/httpd.conf.j2, dest: conf/httpd.conf }
+#  notify: apachectl configtest
+
+#- name: copy postfixadmin
+#  tags: apache
+#  copy: src=roles/apache/files/postfixadmin-3.2.tar.gz dest=/var/www/postfixadmin-3.2.tar.gz
+#
+#- name: unarchive postfixadmin
+#  tags: apache
+#  unarchive:
+#    src: /var/www/postfixadmin-3.2.tar.gz
+#    dest: /var/www/html/
+#    remote_src: yes
+#  notify: apachectl configtest
+#  ignore_errors: true

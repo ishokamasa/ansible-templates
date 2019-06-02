@@ -1,0 +1,6 @@
+- name: nginx configtest
+  shell: nginx -t
+  notify: nginx reload
+
+- name: nginx reload
+  shell: nginx reload
