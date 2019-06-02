@@ -1,0 +1,62 @@
+---
+- name: install php-fpm repo
+  tags: php-fpm
+  yum:
+    name: http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
+    state: present
+
+- name: install php-fpm
+  tags: php-fpm
+  yum: pkg={{ item }} state=latest
+  loop:
+    - php70
+    - php70-php
+    - php70-php-common
+    - php70-php-cli
+    - php70-build
+    - php70-php-fpm
+    - php70-php-pdo
+    - php70-php-opcache
+    - php70-php-mcrypt
+    - php70-php-pear
+    - php70-php-mysqlnd
+    - php70-php-xml
+    - php70-php-json
+    - php70-php-soap
+    - php70-php-gd
+
+- name: set php.ini
+  tags: php-fpm
+  replace: 
+    dest: /etc/opt/remi/php70/php.ini
+    regexp: "{{ item.regexp }}"
+    replace: "{{ item.replace }}"
+  loop:
+    - { regexp: ^;date.timezone =$, replace: date.timezone = \'Asia/Tokyo\' }
+    - { regexp: ^upload_max_filesize = 2M$, replace: upload_max_filesize = 10M }
+    - { regexp: ^post_max_size = 8M$, replace: post_max_size = 10M }
+
+- name: set www.conf
+  tags: php-fpm
+  replace: 
+    dest: /etc/opt/remi/php70/php-fpm.d/www.conf
+    regexp: "{{ item.regexp }}"
+    replace: "{{ item.replace }}"
+  loop:
+    - { regexp: ^listen = 127.0.0.1:9000$, replace: listen = /var/run/php-fpm/php-fpm.sock }
+
+- name: create php-fpm pid directory
+  tags: php-fpm
+  file:
+    dest: /var/run/php-fpm
+    owner: nginx
+    group: nginx
+    mode: '0644'
+    state: directory
+
+- name: start php-fpm
+  tags: php-fpm
+  service:
+    name: php70-php-fpm
+    enabled: yes
+    state: started

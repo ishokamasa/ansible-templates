@@ -4,4 +4,5 @@
     - group_vars/all.yml
   roles:
     - base
+    - php-fpm
     - nginx
