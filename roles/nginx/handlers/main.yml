@@ -3,4 +3,4 @@
   notify: nginx reload
 
 - name: nginx reload
-  shell: nginx reload
+  shell: nginx -s reload

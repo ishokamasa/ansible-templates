@@ -18,17 +18,17 @@
     enabled: yes
     state: started
 
-#- name: copy config files of apache
-#  tags: apache
-#  template:
-#    src: "{{ item.src }}"
-#    dest: "/etc/httpd/{{ item.dest }}"
-#    owner: root
-#    group: root
-#    mode: 0644
-#  loop:
-#    - { src: roles/apache/templates/httpd.conf.j2, dest: conf/httpd.conf }
-#  notify: apachectl configtest
+- name: copy config files
+  tags: nginx
+  copy:
+    src: "{{ item.src }}"
+    dest: "/etc/nginx/{{ item.dest }}"
+    owner: nginx
+    group: nginx
+    mode: 0644
+  loop:
+    - { src: roles/nginx/files/nginx.conf, dest: nginx.conf }
+  notify: nginx configtest
 
 #- name: copy postfixadmin
 #  tags: apache
