@@ -15,4 +15,5 @@
   tags: base
   user:
     name: "{{ ssh_user }}"
+    groups: wheel
     shell: /bin/zsh
