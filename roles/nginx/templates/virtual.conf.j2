@@ -1,17 +1,16 @@
 server {
     listen       80;
-    server_name  {{ virtualdomain }};
-    root         /var/www/html/{{ virtualdomain }};
+    server_name  {{ item }};
+    root         /var/www/html/{{ item }}/html/;
 
-    #charset koi8-r;
-    #access_log  /var/log/nginx/{{ virtualdomain }}.access.log  main;
+    access_log  /var/log/nginx/{{ item }}.access.log  main;
 
     location / {
-        root   /var/www/html/{{ virtualdomain }};
+        root   /var/www/html/{{ item }}/html/;
         index  index.php index.html index.htm;
     }
 
-    #error_page  404              /404.html;
+    error_page  404              /404.html;
     error_page   500 502 503 504  /50x.html;
     location = /50x.html {
         root   /usr/share/nginx/html;
