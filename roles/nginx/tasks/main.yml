@@ -33,19 +33,23 @@
 - name: create directory
   tags: nginx
   file:
-    path: "/var/www/html/{{ virtualdomain }}"
+    path: "/var/www/html/{{ item }}/html/"
     owner: nginx
     group: nginx
     mode: '0775'
     state: directory
     recurse: yes
+  with_items:
+    - "{{ virtualdomain }}"
 
-- name: copy virutal config
-  tags: nginx
-  template:
-    src: "roles/nginx/templates/virtual.conf.j2"
-    dest: "/etc/nginx/conf.d/{{ virtualdomain }}.conf"
-    owner: nginx
-    group: nginx
-    mode: 0644
-  notify: nginx configtest
+#- name: copy virutal config
+#  tags: nginx
+#  template:
+#    owner: nginx
+#    group: nginx
+#    mode: 0644
+#    src: roles/nginx/templates/virtual.conf.j2
+#    dest: "/etc/nginx/conf.d/{{ item.dest }}.conf"
+#  loop:
+#    - { dest:  }
+#  notify: nginx configtest

@@ -1,3 +1,6 @@
 ---
 domain:
-hostname:
+ssh_user:
+virtualdomain:
+  - XXX
+  - XXX
