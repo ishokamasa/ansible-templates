@@ -9,3 +9,10 @@
     - tcpdump
     - telnet
     - wget
+    - zsh
+
+- name: useradd
+  tags: base
+  user:
+    name: "{{ ssh_user }}"
+    shell: /bin/zsh
