@@ -2,7 +2,7 @@
 - name: install mysql repo
   tags: mysql
   yum:
-    name: http://dev.mysql.com/get/mysql57-community-release-el6-7.noarch.rpm
+    name: http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm
     state: present
 
 - name: install mysql
@@ -10,6 +10,12 @@
   yum: pkg="{{ item }}" state=present
   loop:
     - mysql-community-server
+
+### インストールに失敗したら
+# https://teratail.com/questions/114533
+# cd /lib64
+# ln -s libsasl2.so.3.0.0 libsasl2.so.2
+# yum install mysql-community-server
 
 - name: start mysql
   tags: mysql
